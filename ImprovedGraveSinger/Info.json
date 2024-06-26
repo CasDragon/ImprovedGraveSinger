@@ -1,0 +1,12 @@
+﻿{
+  "Id": "ImprovedGraveSinger",
+  "DisplayName": "Improved Grave Singer",
+  "Author": "",
+  "Version": "1.0.0",
+  "ManagerVersion": "0.27.11",
+  "Requirements": [],
+  "AssemblyName": "ImprovedGraveSinger.dll",
+  "EntryMethod": "ImprovedGraveSinger.Main.Load",
+  "HomePage": "",
+  "Repository": ""
+}
