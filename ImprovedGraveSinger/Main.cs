@@ -1,5 +1,6 @@
 ﻿using BlueprintCore.Utils;
 using HarmonyLib;
+using ImprovedGraveSinger.Util;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.UI.MVVM._VM.Crusade.Recruit;
 using System;
@@ -9,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityModManagerNet;
+using static UnityModManagerNet.UnityModManager;
 
 namespace ImprovedGraveSinger
 {
@@ -19,12 +21,11 @@ namespace ImprovedGraveSinger
     {
         internal static Harmony HarmonyInstance;
         public static readonly LogWrapper logger = LogWrapper.Get("improvedgravesinger");
+        internal static ModEntry entry;
 
         public static bool Load(UnityModManager.ModEntry modEntry)
         {
-#if DEBUG
-            modEntry.OnUnload = OnUnload;
-#endif
+            entry = modEntry;
             modEntry.OnGUI = OnGUI;
             HarmonyInstance = new Harmony(modEntry.Info.Id);
             HarmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
@@ -35,13 +36,6 @@ namespace ImprovedGraveSinger
         {
 
         }
-
-#if DEBUG
-        public static bool OnUnload(UnityModManager.ModEntry modEntry) {
-            HarmonyInstance.UnpatchAll(modEntry.Info.Id);
-            return true;
-        }
-#endif
     }
     [HarmonyPatch(typeof(BlueprintsCache))]
     static class BlueprintsCaches_Patch
@@ -61,6 +55,7 @@ namespace ImprovedGraveSinger
                 }
                 Initialized = true;
 
+                Settings.InitializeSettings();
                 Main.logger.Info("Patching Grave Singer enchantment.");
                 Weapon.Configure();
             }

@@ -2,6 +2,7 @@
 using BlueprintCore.Blueprints.Configurators.Items.Ecnchantments;
 using BlueprintCore.Blueprints.Configurators.Items.Weapons;
 using BlueprintCore.Blueprints.References;
+using ImprovedGraveSinger.Util;
 using Kingmaker.Blueprints;
 using Kingmaker.Designers.Mechanics;
 using Kingmaker.Designers.Mechanics.WeaponEnchants;
@@ -17,16 +18,27 @@ namespace ImprovedGraveSinger
     {
         public static void Configure()
         {
-            ItemWeaponConfigurator.For(ItemWeaponRefs.RovagugRelicSteppeHandaxeItem.Reference.Get())
-                .AddToEnchantments(WeaponEnchantmentRefs.ViciousEnchantment.Reference.Get())
-                .Configure();
-            ItemWeaponConfigurator.For(ItemWeaponRefs.RovagugRelicSteppeGreataxeItem.Reference.Get())
-                .AddToEnchantments(WeaponEnchantmentRefs.ViciousEnchantment.Reference.Get())
-                .Configure();
-            ItemWeaponConfigurator.For(ItemWeaponRefs.RovagugRelicSteppeBattlaxeItem.Reference.Get())
-                .AddToEnchantments(WeaponEnchantmentRefs.ViciousEnchantment.Reference.Get())
-                .Configure();
-            WeaponEnchantmentRefs.RovagugRelicSteppeEnchantment.Reference.Get().GetComponent<WeaponCriticalEdgeStackable>().Bonus = 10;
+            if (Settings.GetSetting<bool>("viciousenchant"))
+            {
+                ItemWeaponConfigurator.For(ItemWeaponRefs.RovagugRelicSteppeHandaxeItem.Reference.Get())
+                    .AddToEnchantments(WeaponEnchantmentRefs.ViciousEnchantment.Reference.Get())
+                    .Configure();
+                ItemWeaponConfigurator.For(ItemWeaponRefs.RovagugRelicSteppeGreataxeItem.Reference.Get())
+                    .AddToEnchantments(WeaponEnchantmentRefs.ViciousEnchantment.Reference.Get())
+                    .Configure();
+                ItemWeaponConfigurator.For(ItemWeaponRefs.RovagugRelicSteppeBattlaxeItem.Reference.Get())
+                    .AddToEnchantments(WeaponEnchantmentRefs.ViciousEnchantment.Reference.Get())
+                    .Configure();
+            }
+            var bonus = Settings.GetSetting<int>("gsbonus");
+            if ( bonus > 0)
+            {
+                WeaponEnchantmentRefs.RovagugRelicSteppeEnchantment.Reference.Get().GetComponent<WeaponCriticalEdgeStackable>().Bonus = bonus;
+            }
+            else
+            {
+                WeaponEnchantmentRefs.RovagugRelicSteppeEnchantment.Reference.Get().GetComponent<WeaponCriticalEdgeStackable>().Bonus = 10;
+            }
         }
     }
 }
