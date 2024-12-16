@@ -1,6 +1,5 @@
 ﻿using BlueprintCore.Utils;
 using HarmonyLib;
-using ImprovedGraveSinger.Util;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.UI.MVVM._VM.Crusade.Recruit;
 using System;
@@ -55,7 +54,7 @@ namespace ImprovedGraveSinger
                 }
                 Initialized = true;
 
-                Settings.InitializeSettings();
+                //Settings.InitializeSettings();
                 Main.logger.Info("Patching Grave Singer enchantment.");
                 Weapon.Configure();
             }
